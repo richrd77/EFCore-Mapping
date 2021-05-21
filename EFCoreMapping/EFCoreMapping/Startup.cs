@@ -28,7 +28,12 @@ namespace EFCoreMapping
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyDBContext>(o => o.UseSqlServer(@"Data Source=RICHARD-PC\SQLEXPRESS;Initial Catalog=EFCoreMapping;Integrated Security=True"));
-            services.AddControllers();
+
+            //added below serialization line in order to handle reference type objects
+            //otherwise we get an error specifically in 1:* entity mapping
+            services.AddControllers().AddJsonOptions(o => 
+                            o.JsonSerializerOptions.ReferenceHandler =
+                            System.Text.Json.Serialization.ReferenceHandler.Preserve);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EFCoreMapping", Version = "v1" });

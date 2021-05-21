@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EFCoreMapping.OneToOneMapping;
+using EFCoreMapping.OneToManyMapping;
 
 namespace EFCoreMapping
 {
@@ -15,9 +16,16 @@ namespace EFCoreMapping
 
         public DbSet<OneChild> OneonOneChild { get; set; }
 
+
+        public DbSet<OneToManyMappingParent> OneToManyMappingParents { get; set; }
+
+        public DbSet<OneToManyMappingChild> OneToManyMappingChildren { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.RegisterOneToOneRelation();
+
+            modelBuilder.RegisterOneToManyRelationship();
         }
     }
 }
